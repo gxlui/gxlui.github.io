@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="全球甄选进口食品店，提供正宗欧美、日韩、东南亚进口零食、红酒、咖啡、乳制品及健康食品。正品保障，极速配送，开启您的环球美食之旅。">
+    <meta name="keywords" content="进口食品店,进口零食,进口红酒,进口咖啡,全球美食,海外直采">
+    <title>进口食品店-全球甄选正宗海外美食与进口零食</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d35400;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-light: #666666;
+            --border-radius: 8px;
+            --container-width: 1200px;
+            --spacing: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e67e22;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 0 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 60px 0;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #eee;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-color: var(--accent-color);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Featured Products */
+        .featured {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--bg-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-country {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .price small {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+
+        /* Features / Why Us */
+        .features {
+            padding: 60px 0;
+            background-color: var(--bg-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #fff3e0;
+            color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .feature-item h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 60px 0;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 15px;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 30px auto 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            background: var(--accent-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a252f;
+            color: #bdc3c7;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 15px 0;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                🌍 全球<span>进口食品店</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#categories">分类浏览</a></li>
+                    <li><a href="#new-arrivals">新品上市</a></li>
+                    <li><a href="#hot-sales">热销榜单</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="btn btn-outline">登录</button>
+                <button class="btn btn-primary">注册会员</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1>探索全球美食，品味正宗进口风味</h1>
+                <p>严选欧美、日韩、东南亚等全球超过50个国家的优质食材，直达您的餐桌。</p>
+                <form class="search-bar" onsubmit="event.preventDefault();">
+                    <input type="text" placeholder="搜索进口零食、红酒、咖啡...">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="categories">
+            <div class="container">
+                <div class="section-title">
+                    <h2>热门分类</h2>
+                    <p>按国家或品类快速查找您喜爱的进口商品</p>
+                </div>
+                <div class="category-grid">
+                    <div class="category-card">
+                        <span class="category-icon">🇺🇸</span>
+                        <div class="category-name">美国零食</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇯🇵</span>
+                        <div class="category-name">日本零食</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇰🇷</span>
+                        <div class="category-name">韩国美食</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇫🇷</span>
+                        <div class="category-name">法国红酒</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇮🇹</span>
+                        <div class="category-name">意式咖啡</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇸🇬</span>
+                        <div class="category-name">东南亚特产</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇨🇦</span>
+                        <div class="category-name">加拿大乳品</div>
+                    </div>
+                    <div class="category-card">
+                        <span class="category-icon">🇪🇺</span>
+                        <div class="category-name">欧洲巧克力</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section id="new-arrivals" class="featured">
+            <div class="container">
+                <div class="section-title">
+                    <h2>本周精选</h2>
+                    <p>为您挑选的当季热门进口好物</p>
+                </div>
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <article class="product-card">
+                        <div class="product-image">
+                            <span class="product-badge">热销</span>
+                            <img src="https://picsum.photos/seed/snack1/400/300" alt="美国进口混合坚果">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-country">🇺🇸 美国</div>
+                            <h3 class="product-title">加州原味混合坚果礼盒</h3>
+                            <div class="product-footer">
+                                <div class="price">¥ 128.00</div>
+                                <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">加入购物车</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 2 -->
+                    <article class="product-card">
+                        <div class="product-image">
+                            <span class="product-badge">新品</span>
+                            <img src="https://picsum.photos/seed/rice/400/300" alt="日式抹茶饼干">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-country">🇯🇵 日本</div>
+                            <h3 class="product-title">宇治抹茶红豆千层蛋糕</h3>
+                            <div class="product-footer">
+                                <div class="price">¥ 58.00</div>
+                                <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">加入购物车</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 3 -->
+                    <article class="product-card">
+                        <div class="product-image">
+                            <span class="product-badge">爆款</span>
+                            <img src="https://picsum.photos/seed/choco/400/300" alt="比利时黑巧克力">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-country">🇧🇪 比利时</div>
+                            <h3 class="product-title">皇家黑松露巧克力</h3>
+                            <div class="product-footer">
+                                <div class="price">¥ 89.00</div>
+                                <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">加入购物车</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 4 -->
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="https://picsum.photos/seed/wine/400/300" alt="澳洲红酒">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-country">🇦🇺 澳大利亚</div>
+                            <h3 class="product-title">奔富Bin 384红葡萄酒</h3>
+                            <div class="product-footer">
+                                <div class="price">¥ 498.00</div>
+                                <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">加入购物车</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>为什么选择我们</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🚢</div>
+                        <h3>海外直采</h3>
+                        <p>直接对接海外工厂与原产地，省去中间商差价，确保货源新鲜。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <h3>正品保障</h3>
+                        <p>所有商品均持有正规海关单据与检疫证明，假一赔十。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚀</div>
+                        <h3>极速配送</h3>
+                        <p>国内多地仓储，满99元包邮，最快次日达，冷链物流保障生鲜。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="container">
+                <h2>订阅我们的美食周刊</h2>
+                <p>获取最新进口折扣、新品资讯及美食烹饪技巧</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="请输入您的电子邮箱" required>
+                    <button type="submit">立即订阅</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>关于进口食品店</h4>
+                    <p>我们致力于为国内消费者提供最丰富、最正宗的全球进口食品。从零食饮料到红酒咖啡，让您的餐桌充满异国风情。</p>
+                </div>
+                <div class="footer-col">
+                    <h4>购物指南</h4>
+                    <ul>
+                        <li><a href="#">购物流程</a></li>
+                        <li><a href="#">支付方式</a></li>
+                        <li><a href="#">配送说明</a></li>
+                        <li><a href="#">退换货政策</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>客户服务</h4>
+                    <ul>
+                        <li><a href="#">联系客服</a></li>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">意见反馈</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#">微信公众号</a></li>
+                        <li><a href="#">新浪微博</a></li>
+                        <li><a href="#">小红书</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 全球进口食品店 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+                          </html>
