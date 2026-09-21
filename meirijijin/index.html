@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日基金净值-实时行情查询与投资分析平台</title>
+    <meta name="description" content="提供每日基金净值查询、实时涨跌幅、基金评级及投资组合分析。涵盖股票型、混合型、债券型及货币型基金，助您掌握最新市场动态，做出明智投资决策。">
+    <meta name="keywords" content="每日基金净值,基金查询,基金行情,基金净值表,基金投资">
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --danger-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-secondary: #7f8c8d;
+            --border-color: #e0e0e0;
+            --spacing-unit: 16px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 24px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 var(--spacing-unit);
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none; /* Simplified mobile view */
+            }
+            .search-bar {
+                display: none;
+            }
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Fund Table */
+        .fund-table-container {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .fund-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .fund-table th {
+            background-color: #f8f9fa;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-align: left;
+            padding: 16px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fund-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .fund-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .fund-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.85rem;
+            background-color: #eee;
+            color: var(--text-secondary);
+        }
+
+        .rank-badge.top-3 {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .fund-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .fund-code {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .fund-info {
+            display: flex;
+            gap: 16px;
+            font-size: 0.9rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .info-value {
+            font-weight: 500;
+        }
+
+        .trend-up { color: var(--accent-color); }
+        .trend-down { color: var(--danger-color); }
+        .trend-flat { color: var(--text-secondary); }
+
+        /* Sidebar */
+        aside {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .news-list {
+            list-style: none;
+        }
+
+        .news-list li {
+            margin-bottom: 12px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .news-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .news-list a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: block;
+        }
+
+        .news-list a:hover {
+            color: var(--accent-color);
+        }
+
+        .news-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: #bdc3c7;
+            padding: 48px 0 24px;
+            margin-top: 48px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #fff;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+        }
+
+        /* Utilities */
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .highlight-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--accent-color);
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            color: #2e7d32;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span>◆</span> 净值查查
+            </a>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="输入基金代码或名称搜索...">
+            </div>
+            <nav class="nav-links">
+                <a href="#">首页</a>
+                <a href="#">分类浏览</a>
+                <a href="#">基金筛选</a>
+                <a href="#">理财百科</a>
+                <a href="#">帮助中心</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero / Intro Section -->
+        <section style="margin-bottom: 8px;">
+            <div class="highlight-box">
+                <strong>数据更新时间：</strong> 2023年10月27日 15:00<br>
+                <small>所有数据仅供参考，投资有风险，入市需谨慎。</small>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <div class="content-column">
+            <!-- Market Overview -->
+            <section>
+                <div class="section-header">
+                    <h2 class="section-title">今日市场概览</h2>
+                    <a href="#" class="btn-outline" style="padding: 4px 12px; font-size: 0.8rem;">查看大盘走势</a>
+                </div>
+                <div style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px;">
+                    <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-top: 4px solid var(--accent-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">上证指数</div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-top: 4px;">3,052.37</div>
+                        <div style="color: var(--accent-color); font-size: 0.9rem;">+0.85%</div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-top: 4px solid var(--danger-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">深证成指</div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-top: 4px;">9,921.23</div>
+                        <div style="color: var(--danger-color); font-size: 0.9rem;">-0.12%</div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-top: 4px solid var(--accent-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">创业板指</div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-top: 4px;">1,972.18</div>
+                        <div style="color: var(--accent-color); font-size: 0.9rem;">+1.45%</div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-top: 4px solid var(--text-secondary);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">沪深300</div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-top: 4px;">3,632.92</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">+0.54%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fund List Section -->
+            <section>
+                <div class="section-header">
+                    <h2 class="section-title">热门基金净值榜</h2>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="tab-btn active">全部</button>
+                        <button class="tab-btn">混合型</button>
+                        <button class="tab-btn">股票型</button>
+                        <button class="tab-btn">债券型</button>
+                    </div>
+                </div>
+
+                <div class="fund-table-container">
+                    <table class="fund-table">
+                        <thead>
+                            <tr>
+                                <th width="60">排名</th>
+                                <th width="180">基金名称</th>
+                                <th width="100">单位净值</th>
+                                <th width="100">日涨跌幅</th>
+                                <th width="80">日涨幅%</th>
+                                <th width="120">近一年收益</th>
+                                <th width="100">基金类型</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="rank-badge top-3">1</span></td>
+                                <td>
+                                    <span class="fund-name">易方达蓝筹精选混合</span>
+                                    <span class="fund-code">005827</span>
+                                </td>
+                                <td>1.2856</td>
+                                <td>+0.45%</td>
+                                <td class="trend-up">+0.45%</td>
+                                <td class="trend-up">+15.62%</td>
+                                <td><span class="tag">混合型</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge top-3">2</span></td>
+                                <td>
+                                    <span class="fund-name">中欧医疗健康混合C</span>
+                                    <span class="fund-code">003096</span>
+                                </td>
+                                <td>2.1023</td>
+                                <td>-1.20%</td>
+                                <td class="trend-down">-1.20%</td>
+                                <td class="trend-down">-5.40%</td>
+                                <td><span class="tag">混合型</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge top-3">3</span></td>
+                                <td>
+                                    <span class="fund-name">招商中证白酒指数</span>
+                                    <span class="fund-code">161725</span>
+                                </td>
+                                <td>3.4521</td>
+                                <td>+2.15%</td>
+                                <td class="trend-up">+2.15%</td>
+                                <td class="trend-up">+28.90%</td>
+                                <td><span class="tag">指数型</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">4</span></td>
+                                <td>
+                                    <span class="fund-name">兴全合润混合</span>
+                                    <span class="fund-code">163406</span>
+                                </td>
+                                <td>1.7540</td>
+                                <td>+0.88%</td>
+                                <td class="trend-up">+0.88%</td>
+                                <td class="trend-up">+12.05%</td>
+                                <td><span class="tag">混合型</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">5</span></td>
+                                <td>
+                                    <span class="fund-name">富国天惠成长混合</span>
+                                    <span class="fund-code">161005</span>
+                                </td>
+                                <td>2.0123</td>
+                                <td>-0.32%</td>
+                                <td class="trend-down">-0.32%</td>
+                                <td class="trend-flat">+0.50%</td>
+                                <td><span class="tag">混合型</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">6</span></td>
+                                <td>
+                                    <span class="fund-name">嘉实沪深300ETF联接</span>
+                                    <span class="fund-code">002310</span>
+                                </td>
+                                <td>1.6542</td>
+                                <td>+0.12%</td>
+                                <td class="trend-flat">+0.12%</td>
+                                <td class="trend-up">+8.20%</td>
+                                <td><span class="tag">指数型</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge">7</span></td>
+                                <td>
+                                    <span class="fund-name">工银瑞信稳健成长混合</span>
+                                    <span class="fund-code">485008</span>
+                                </td>
+                                <td>0.9650</td>
+                                <td>-0.05%</td>
+                                <td class="trend-flat">-0.05%</td>
+                                <td class="trend-down">-2.10%</td>
+                                <td><span class="tag">混合型</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center; margin-top: 16px;">
+                    <a href="#" class="btn">查看完整榜单</a>
+                </div>
+            </section>
+
+            <!-- Investment Guide / FAQ -->
+            <section>
+                <h2 class="section-title">基金净值与投资指南</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <article style="background: white; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <h3 style="margin-bottom: 10px; font-size: 1.1rem;">什么是基金净值？</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">基金净值（NAV）是指每个交易日收盘后，每份基金资产的价值。计算公式为：<strong>基金净值 = 基金总资产 - 基金总负债</strong>。投资者在申购赎回时，通常参考的是“单位净值”。</p>
+                    </article>
+                    <article style="background: white; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <h3 style="margin-bottom: 10px; font-size: 1.1rem;">如何利用净值走势选基？</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">不要只看短期涨跌。建议关注基金经理的长期业绩曲线。如果一只基金在市场下跌时能保持净值稳定，或在市场上涨时涨幅居前，说明其抗风险能力较强。</p>
+                    </article>
+                    <article style="background: white; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <h3 style="margin-bottom: 10px; font-size: 1.1rem;">定投与单投的区别</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">基金定投可以平摊成本，降低市场波动风险。通过每日关注净值，您可以把握最佳的加仓或止盈时机，避免一次性投入可能带来的高位套牢风险。</p>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sidebar -->
+        <aside>
+            <div class="card">
+                <h3 class="card-title">快速筛选</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="tab-btn" style="text-align: left; justify-content: flex-start;">📈 涨幅榜</button>
+                    <button class="tab-btn" style="text-align: left; justify-content: flex-start;">📉 跌幅榜</button>
+                    <button class="tab-btn" style="text-align: left; justify-content: flex-start;">🏆 近一月</button>
+                    <button class="tab-btn" style="text-align: left; justify-content: flex-start;">💰 稳健收益</button>
+                    <button class="tab-btn" style="text-align: left; justify-content: flex-start;">🆕 新基金</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">市场资讯</h3>
+                <ul class="news-list">
+                    <li>
+                        <a href="#">央行宣布下调存款准备金率0.25个百分点</a>
+                        <span class="news-date">10分钟前</span>
+                    </li>
+                    <li>
+                        <a href="#">新能源汽车板块午后拉升，多只个股涨停</a>
+                        <span class="news-date">30分钟前</span>
+                    </li>
+                    <li>
+                        <a href="#">美联储暗示暂停加息，全球股市迎来反弹</a>
+                        <span class="news-date">1小时前</span>
+                    </li>
+                    <li>
+                        <a href="#">半导体行业迎来新一轮国产替代机遇</a>
+                        <span class="news-date">2小时前</span>
+                    </li>
+                    <li>
+                        <a href="#">Q4市场展望：关注高股息与科技成长板块</a>
+                        <span class="news-date">3小时前</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white;">
+                <h3 class="card-title" style="color: white;">下载APP</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 16px; opacity: 0.9;">随时随地查看最新每日基金净值，设置涨跌提醒。</p>
+                <button class="btn" style="width: 100%; background-color: #27ae60; border: none;">扫码下载</button>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>关于我们</h4>
+                <ul>
+                    <li><a href="#">平台介绍</a></li>
+                    <li><a href="#">团队介绍</a></li>
+                    <li><a href="#">加入我们</a></li>
+                    <li><a href="#">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>投资服务</h4>
+                <ul>
+                    <li><a href="#">基金筛选器</a></li>
+                    <li><a href="#">组合诊断</a></li>
+                    <li><a href="#">费率计算器</a></li>
+                    <li><a href="#">历史净值查询</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>帮助中心</h4>
+                <ul>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">数据来源说明</a></li>
+                    <li><a href="#">风险提示</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关注我们</h4>
+                <ul>
+                    <li><a href="#">微信公众号</a></li>
+                    <li><a href="#">新浪微博</a></li>
+                    <li><a href="#">知乎专栏</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 净值查查平台. All rights reserved. 本站数据仅供参考，不构成投资建议。</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Tab Interaction Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs in the same container
+                    const parentContainer = this.parentElement;
+                    if(parentContainer.classList.contains('filter-tabs')) {
+                        parentContainer.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                    } else if (parentContainer.classList.contains('card')) {
+                        parentContainer.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                    }
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Optional: Simulate content refresh
+                    console.log('Filter selected: ' + this.textContent);
+                });
+            });
+
+            // Search Bar Interaction
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    alert('搜索功能演示：正在查询 "' + this.value + '" 的最新净值...');
+                    this.value = '';
+                }
+            });
+        });
+    </script>
+</body>
+  </html>
