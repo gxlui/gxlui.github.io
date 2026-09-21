@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="51人才网 - 专业人力资源服务平台，提供海量企业招聘信息、职位搜索、人才简历库及职业指导服务，连接企业与人才，助力职场发展。">
+    <meta name="keywords" content="51人才网, 招聘, 求职, 人才招聘, 企业招聘, 职位搜索, 简历投递, 人力资源">
+    <title>51人才网-企业招聘与人才求职服务平台</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #004494;
+            --accent-color: #ff6600;
+            --text-dark: #333333;
+            --text-gray: #666666;
+            --bg-light: #f4f6f9;
+            --white: #ffffff;
+            --border-color: #e1e4e8;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+            --radius: 6px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background-color: #f8f9fa;
+            font-size: 12px;
+            color: var(--text-gray);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-top .container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+
+        .header-main {
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-dark);
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: #e6f0fa;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
+            color: var(--white);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero-text p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-search {
+            background: var(--white);
+            padding: 10px;
+            border-radius: var(--radius);
+            display: flex;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-width: 600px;
+        }
+
+        .hero-search input {
+            flex: 1;
+            border: none;
+            padding: 12px 15px;
+            font-size: 16px;
+            outline: none;
+            border-right: 1px solid #eee;
+        }
+
+        .hero-search button {
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Main Content Layout */
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Sections */
+        .section {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .section-more {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .section-more:hover {
+            color: var(--primary-color);
+        }
+
+        /* Job List */
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .job-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .job-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .job-info {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .job-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #eee;
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .job-details h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .job-details .company {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .job-details .tags {
+            display: flex;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .tag {
+            padding: 2px 6px;
+            background-color: #f0f2f5;
+            border-radius: 3px;
+            color: var(--text-gray);
+        }
+
+        .tag.salary {
+            background-color: #fff0e6;
+            color: #ff6600;
+        }
+
+        .job-meta {
+            text-align: right;
+            min-width: 120px;
+        }
+
+        .salary {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Sidebar */
+        .sidebar-widget {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .recruit-card {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .recruit-card:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .recruit-card h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .recruit-card .company {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .recruit-card .salary {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #bdc3c7;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                display: none;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin: 0 auto 30px;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .main-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .job-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .job-meta {
+                text-align: left;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-search {
+                flex-direction: column;
+            }
+            
+            .hero-search button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <span>全国服务热线：400-123-4567</span>
+                <span>企业登录 | 个人注册</span>
+            </div>
+        </div>
+        <div class="container header-main">
+            <a href="#" class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0056b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="#0056b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#0056b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                51人才网
+                <span>51Rencai</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="active">首页</a>
+                <a href="#">职位搜索</a>
+                <a href="#">企业招聘</a>
+                <a href="#">校园招聘</a>
+                <a href="#">职场资讯</a>
+                <a href="#">人才测评</a>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">企业登录</a>
+                <a href="#" class="btn btn-primary">免费发布职位</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>连接人才与机遇，开启职业新篇章</h1>
+                <p>51人才网致力于为企业和求职者提供高效、精准的招聘求职服务，拥有海量职位信息与专业人才库。</p>
+                <form class="hero-search" onsubmit="event.preventDefault();">
+                    <input type="text" placeholder="请输入职位名称、公司名称或关键词...">
+                    <button type="submit">立即搜索</button>
+                </form>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h3>50万+</h3>
+                        <p>活跃企业</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>800万+</h3>
+                        <p>注册人才</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>1000万+</h3>
+                        <p>发布职位</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container main-wrapper">
+        <main>
+            <!-- Hot Jobs Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">热门职位推荐</h2>
+                    <a href="#" class="section-more">查看更多职位 &gt;</a>
+                </div>
+                <div class="job-list">
+                    <article class="job-item">
+                        <div class="job-info">
+                            <div class="job-avatar">A</div>
+                            <div class="job-details">
+                                <h3>高级软件工程师</h3>
+                                <div class="company">未来科技有限公司</div>
+                                <div class="tags">
+                                    <span class="tag">经验5-10年</span>
+                                    <span class="tag">本科</span>
+                                    <span class="tag">计算机/互联网</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-meta">
+                            <div class="salary">20k-35k</div>
+                            <div class="post-time">今天</div>
+                        </div>
+                    </article>
+
+                    <article class="job-item">
+                        <div class="job-info">
+                            <div class="job-avatar">M</div>
+                            <div class="job-details">
+                                <h3>市场营销经理</h3>
+                                <div class="company">全球贸易集团</div>
+                                <div class="tags">
+                                    <span class="tag">经验3-5年</span>
+                                    <span class="tag">本科</span>
+                                    <span class="tag">市场营销</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-meta">
+                            <div class="salary">15k-25k</div>
+                            <div class="post-time">2小时前</div>
+                        </div>
+                    </article>
+
+                    <article class="job-item">
+                        <div class="job-info">
+                            <div class="job-avatar">H</div>
+                            <div class="job-details">
+                                <h3>资深人力资源专员</h3>
+                                <div class="company">创新动力企业</div>
+                                <div class="tags">
+                                    <span class="tag">经验1-3年</span>
+                                    <span class="tag">大专</span>
+                                    <span class="tag">人力资源</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-meta">
+                            <div class="salary">8k-12k</div>
+                            <div class="post-time">昨天</div>
+                        </div>
+                    </article>
+
+                    <article class="job-item">
+                        <div class="job-info">
+                            <div class="job-avatar">L</div>
+                            <div class="job-details">
+                                <h3>财务总监 (CFO)</h3>
+                                <div class="company">上市集团总部</div>
+                                <div class="tags">
+                                    <span class="tag">经验10年以上</span>
+                                    <span class="tag">本科</span>
+                                    <span class="tag">财务/金融</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-meta">
+                            <div class="salary">40k-60k</div>
+                            <div class="post-time">3天前</div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Career Guide Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">职场指南</h2>
+                    <a href="#" class="section-more">更多资讯 &gt;</a>
+                </div>
+                <div class="job-list">
+                    <article class="job-item" style="padding: 10px; border: none;">
+                        <div class="job-details" style="display: flex; align-items: center; gap: 15px;">
+                            <img src="https://picsum.photos/seed/career1/80/80" alt="Article" style="border-radius: 4px; width: 80px; height: 80px; object-fit: cover;">
+                            <div>
+                                <h3 style="font-size: 15px; margin-bottom: 5px;">2024年春季求职面试技巧与注意事项</h3>
+                                <p style="font-size: 13px; color: var(--text-gray);">如何在众多竞争者中脱颖而出？专家为您解析面试核心要点。</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="job-item" style="padding: 10px; border: none;">
+                        <div class="job-details" style="display: flex; align-items: center; gap: 15px;">
+                            <img src="https://picsum.photos/seed/career2/80/80" alt="Article" style="border-radius: 4px; width: 80px; height: 80px; object-fit: cover;">
+                            <div>
+                                <h3 style="font-size: 15px; margin-bottom: 5px;">简历优化：如何让HR一眼看到你的亮点</h3>
+                                <p style="font-size: 13px; color: var(--text-gray);">掌握STAR法则，打造高转化率的求职简历模板。</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="job-item" style="padding: 10px; border: none;">
+                        <div class="job-details" style="display: flex; align-items: center; gap: 15px;">
+                            <img src="https://picsum.photos/seed/career3/80/80" alt="Article" style="border-radius: 4px; width: 80px; height: 80px; object-fit: cover;">
+                            <div>
+                                <h3 style="font-size: 15px; margin-bottom: 5px;">应届生入职第一份工作该怎么选？</h3>
+                                <p style="font-size: 13px; color: var(--text-gray);">避坑指南：分析平台、薪资与成长空间的关系。</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <aside>
+            <!-- Quick Recruitment -->
+            <div class="sidebar-widget">
+                <div class="section-header">
+                    <h2 class="section-title">急聘职位</h2>
+                </div>
+                <div class="recruit-list">
+                    <div class="recruit-card">
+                        <h4>外贸业务员</h4>
+                        <div class="company">宏达进出口</div>
+                        <div class="salary">8-12k</div>
+                    </div>
+                    <div class="recruit-card">
+                        <h4>新媒体运营</h4>
+                        <div class="company">星火文化传媒</div>
+                        <div class="salary">6-10k</div>
+                    </div>
+                    <div class="recruit-card">
+                        <h4>电工</h4>
+                        <div class="company">恒通物业</div>
+                        <div class="salary">5-8k</div>
+                    </div>
+                    <div class="recruit-card">
+                        <h4>行政前台</h4>
+                        <div class="company">盛世集团</div>
+                        <div class="salary">4-6k</div>
+                    </div>
+                    <div class="recruit-card">
+                        <h4>普工/技工</h4>
+                        <div class="company">精密制造厂</div>
+                        <div class="salary">5-7k</div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 10px;">查看全部急聘</a>
+            </div>
+
+            <!-- Download App -->
+            <div class="sidebar-widget" style="background: linear-gradient(135deg, #0056b3 0%, #003d80 100%); color: white;">
+                <h3 style="margin-bottom: 10px;">手机找工作更方便</h3>
+                <p style="font-size: 13px; opacity: 0.9; margin-bottom: 20px;">随时随地查看职位，一键投递简历，不错过任何机会。</p>
+                <div style="display: flex; gap: 10px;">
+                    <div style="flex: 1; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; text-align: center; font-size: 12px;">
+                        <div style="font-size: 24px; margin-bottom: 5px;"></div>
+                        App Store
+                    </div>
+                    <div style="flex: 1; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; text-align: center; font-size: 12px;">
+                        <div style="font-size: 24px; margin-bottom: 5px;">▶</div>
+                        Android
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>关于51人才网</h4>
+                    <ul>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#">合作伙伴</a></li>
+                        <li><a href="#">广告服务</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>人才服务</h4>
+                    <ul>
+                        <li><a href="#">职位搜索</a></li>
+                        <li><a href="#">简历中心</a></li>
+                        <li><a href="#">人才测评</a></li>
+                        <li><a href="#">职场资讯</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>企业服务</h4>
+                    <ul>
+                        <li><a href="#">发布职位</a></li>
+                        <li><a href="#">人才库搜索</a></li>
+                        <li><a href="#">校园招聘</a></li>
+                        <li><a href="#">招聘方案</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li>客服热线：400-123-4567</li>
+                        <li>工作时间：周一至周五 9:00-18:00</li>
+                        <li>电子邮箱：support@51rencai.com</li>
+                        <li>公司地址：北京市朝阳区科技园区88号</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 51人才网 版权所有 | 京ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+                                  </html>
